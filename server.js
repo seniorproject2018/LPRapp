@@ -3,7 +3,6 @@ var bodyParser = require("body-parser");
 var mongodb = require("mongodb");
 var ObjectID = mongodb.ObjectID;
 
-//Variables for server 
 var CONTACTS_COLLECTION = "contacts";
 
 var app = express();
@@ -13,7 +12,7 @@ app.use(bodyParser.json());
 var db;
 
 // Connect to the database before starting the application server.
-mongodb.MongoClient.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/test", function (err, client) {
+mongodb.MongoClient.connect(process.env.MONGODB_URI || "mongodb://heroku_gs8hmkn3:a76tjk2171270hicfau9b5vv5u@ds143039.mlab.com:43039/heroku_gs8hmkn3", function (err, client) {
   if (err) {
     console.log(err);
     process.exit(1);
@@ -29,5 +28,3 @@ mongodb.MongoClient.connect(process.env.MONGODB_URI || "mongodb://localhost:2701
     console.log("App now running on port", port);
   });
 });
-
-//API ROUTES BELOW
