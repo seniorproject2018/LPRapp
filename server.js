@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 var db;
 
 // Connect to the database before starting the application server.
-mongodb.MongoClient.connect(process.env.MONGODB_URI, function (err, database) {
+mongodb.MongoClient.connect(process.env.MONGODB_URI || "mongodb://heroku_gs8hmkn3:a76tjk2171270hicfau9b5vv5u@ds143039.mlab.com:43039/heroku_gs8hmkn3", function (err, client) {
   if (err) {
     console.log(err);
     process.exit(1);
