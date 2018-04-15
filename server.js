@@ -57,16 +57,15 @@ app.post("/api/registeredVehicles", function(req, res) {
     handleError(res, "Invalid user input", "Must provide a plate.", 400);
   }else if (!req.body.studentID) {
     handleError(res, "Invalid user input", "Must provide a valid student ID.", 400);
-  }else{}
+  }else{
   db.collection(REGISTERED_VEHICLES_COLLECTION).insertOne(newVehicle, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to create new vehicle.");
     } else {
       res.status(201).json(doc.ops[0]);
-    }
-    
+    }    
   });
-});
+}
 });
 
 /*  "/api/contacts/:id"
