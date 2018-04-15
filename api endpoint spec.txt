@@ -1,0 +1,27 @@
+/api/vehiclesInLot
+GET: all vehicles in lot
+POST: add new vehicle to lot
+
+/api/vehiclesInLot/:id
+GET: find vehicle by id
+PUT: update vehicle by id
+DELETE: delete vehicle by id
+
+/api/vehiclesInLot/:plate
+GET: find vehicle by plate
+PUT: update vehicle by plate
+DELETE: delete vehicle by plate
+
+/api/registeredVehicles
+GET: all registered vehicles
+POST: register a new vehicle
+
+/api/registeredVehicles/:id
+GET: find vehicle by id
+PUT: update vehicle by id
+DELETE: delete vehicle by id
+
+/api/registeredVehicles/:plate
+GET: find vehicle by plate
+PUT: update vehicle by plate
+DELETE: delete vehicle by plate
