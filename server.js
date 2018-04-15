@@ -49,7 +49,7 @@ app.get("/api/registeredVehicles", function(req, res) {
   db.collection(REGISTERED_VEHICLES_COLLECTION).find({}).toArray(function(err, docs) {
     if (err) {
       handleError(res, err.message, "Failed to get authorized vehicle.");
-    } else {
+    } else {   
       res.status(200).json(docs);
     }
   });
