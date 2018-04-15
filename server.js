@@ -3,8 +3,8 @@ var bodyParser = require("body-parser");
 var mongodb = require("mongodb");
 var ObjectID = mongodb.ObjectID;
 
-var AuthorizedVeh_Collection = "registeredVehicles";
-var ParkingLot_Collection = "vehiclesInLot";
+var REGISTERED_VEHICLES_COLLECTION = "registeredVehicles";
+var VEHICLES_IN_LOT_COLLECTION = "vehiclesInLot";
 
 var app = express();
 app.use(bodyParser.json());
@@ -20,7 +20,7 @@ mongodb.MongoClient.connect(process.env.MONGODB_URI || "mongodb://heroku_gs8hmkn
   }
 
   // Save database object from the callback for reuse.
-  db = database;
+  db = client.db();
   console.log("Database connection ready");
 
   // Initialize the app.
@@ -28,9 +28,11 @@ mongodb.MongoClient.connect(process.env.MONGODB_URI || "mongodb://heroku_gs8hmkn
     var port = server.address().port;
     console.log("App now running on port", port);
   });
-});
 
-// CONTACTS API ROUTES BELOW
+  app.get('/', function(req, res) {
+    res.send('It works');
+  });
+  // CONTACTS API ROUTES BELOW
 
 // Generic error handler used by all endpoints.
 function handleError(res, reason, message, code) {
@@ -44,7 +46,7 @@ function handleError(res, reason, message, code) {
  */
 
 app.get("/api/registeredVehicles", function(req, res) {
-  db.collection(AuthorizedVeh_Collection).find({}).toArray(function(err, docs) {
+  db.collection(REGISTERED_VEHICLES_COLLECTION).find({}).toArray(function(err, docs) {
     if (err) {
       handleError(res, err.message, "Failed to get authorized vehicle.");
     } else {
@@ -57,11 +59,11 @@ app.post("/api/registeredVehicles", function(req, res) {
   var newVehicle = req.body;
   newVehicle.createDate = new Date();
 
-  if (!req.body.name) {
-    handleError(res, "Invalid user input", "Must provide a name.", 400);
+  if (!req.body.plate) {
+    handleError(res, "Invalid user input", "Must provide a plate number.", 400);
   }
 
-  db.collection(AuthorizedVeh_Collection).insertOne(newVehicle, function(err, doc) {
+  db.collection(REGISTERED_VEHICLES_COLLECTION).insertOne(newVehicle, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to create new vehicle.");
     } else {
@@ -77,7 +79,7 @@ app.post("/api/registeredVehicles", function(req, res) {
  */
 
 app.get("/api/registeredVehicles/:id", function(req, res) {
-  db.collection(AuthorizedVeh_Collection).findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
+  db.collection(REGISTERED_VEHICLES_COLLECTION).findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to get contact");
     } else {
@@ -90,7 +92,7 @@ app.put("/api/registeredVehicles/:id", function(req, res) {
   var updateDoc = req.body;
   delete updateDoc._id;
 
-  db.collection(AuthorizedVeh_Collection).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
+  db.collection(REGISTERED_VEHICLES_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to update vehicles");
     } else {
@@ -101,11 +103,12 @@ app.put("/api/registeredVehicles/:id", function(req, res) {
 });
 
 app.delete("/api/registeredVehicles/:id", function(req, res) {
-  db.collection(AuthorizedVeh_Collection).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
+  db.collection(REGISTERED_VEHICLES_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
     if (err) {
       handleError(res, err.message, "Failed to delete vehicle");
     } else {
       res.status(200).json(req.params.id);
     }
   });
+});
 });
