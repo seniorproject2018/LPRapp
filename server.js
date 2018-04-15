@@ -54,9 +54,7 @@ app.post("/api/registeredVehicles", function(req, res) {
   var newVehicle = req.body;
   newVehicle.createDate = new Date();
 
-  if (!req.body.plate) {
-    handleError(res, "Invalid user input", "Must provide a plate number.", 400);
-  }
+
 
   db.collection(REGISTERED_VEHICLES_COLLECTION).insertOne(newVehicle, function(err, doc) {
     if (err) {
