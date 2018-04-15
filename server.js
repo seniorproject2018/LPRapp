@@ -32,18 +32,13 @@ mongodb.MongoClient.connect(process.env.MONGODB_URI || "mongodb://heroku_gs8hmkn
   app.get('/', function(req, res) {
     res.send('It works');
   });
-  // CONTACTS API ROUTES BELOW
+  // API ROUTES BELOW
 
 // Generic error handler used by all endpoints.
 function handleError(res, reason, message, code) {
   console.log("ERROR: " + reason);
   res.status(code || 500).json({"error": message});
 }
-
-/*  "/api/contacts"
- *    GET: finds all contacts
- *    POST: creates a new contact
- */
 
 app.get("/api/registeredVehicles", function(req, res) {
   db.collection(REGISTERED_VEHICLES_COLLECTION).find({}).toArray(function(err, docs) {
