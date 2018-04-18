@@ -187,7 +187,7 @@ app.post("/api/vehiclesInLot", function(req, res) {
 
 app.get("/api/registeredVehicles/:id", function(req, res) {
 
-  db.collection(REGISTERED_VEHICLES_COLLECTION).findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
+  db.collection(REGISTERED_VEHICLES_COLLECTION).findOne({ _id: req.params.id}, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to get vehicle");
     } else {
