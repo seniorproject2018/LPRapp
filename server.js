@@ -240,7 +240,7 @@ app.get("/api/vehiclesInLot/Plate/:plate", function(req, res) {
 });
 
 
-app.put("/api/registeredVehicles/ID/:id", function(req, res) {
+app.patch("/api/registeredVehicles/ID/:id", function(req, res) {
 
   var updateDoc = req.body;
 
@@ -265,7 +265,7 @@ app.put("/api/registeredVehicles/ID/:id", function(req, res) {
   });
 
 });
-app.put("/api/vehiclesInLot/ID/:id", function(req, res){
+app.patch("/api/vehiclesInLot/ID/:id", function(req, res){
 
   var updateDoc = req.body;
 
