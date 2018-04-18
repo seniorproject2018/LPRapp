@@ -203,6 +203,24 @@ app.get("/api/registeredVehicles/ID/:id", function(req, res) {
 
 });
 
+app.get("/api/registeredVehicles/Plate/:plate", function(req, res) {
+
+  db.collection(REGISTERED_VEHICLES_COLLECTION).findOne({ plate: req.params.plate}, function(err, doc) {
+
+    if (err) {
+
+      handleError(res, err.message, "Failed to get vehicle by plate");
+
+    } else {
+
+      res.status(200).json(doc);
+
+    }
+
+  });
+
+});
+
 app.get("/api/vehiclesInLot/ID/:id", function(req, res) {
 
   db.collection(VEHICLES_IN_LOT_COLLECTION).findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
@@ -220,7 +238,7 @@ app.get("/api/vehiclesInLot/Plate/:plate", function(req, res) {
 
     if (err) {
 
-      handleError(res, err.message, "Failed to get info");
+      handleError(res, err.message, "Failed to get vehicle by plate");
 
     } else {
 
