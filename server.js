@@ -66,7 +66,7 @@ mongodb.MongoClient.connect(process.env.MONGODB_URI || "mongodb://heroku_gs8hmkn
 
   });
 
-  // CONTACTS API ROUTES BELOW
+  //  API ROUTES BELOW
 
 
 
@@ -82,7 +82,7 @@ function handleError(res, reason, message, code) {
 
 
 
-
+//returns an array of all vehicles in the registeredVehicles collection
 app.get("/api/registeredVehicles", function(req, res) {
 
   db.collection(REGISTERED_VEHICLES_COLLECTION).find({}).toArray(function(err, docs) {
@@ -101,6 +101,7 @@ app.get("/api/registeredVehicles", function(req, res) {
 
 });
 
+//returns an array of all vehicles in the vehiclesInLot collection
 app.get("/api/vehiclesInLot", function(req, res) {
 
   db.collection(VEHICLES_IN_LOT_COLLECTION).find({}).toArray(function(err, docs) {
@@ -119,14 +120,11 @@ app.get("/api/vehiclesInLot", function(req, res) {
 
 });
 
-
+//Adds a new vehicle to the registeredVehicles collection
 app.post("/api/registeredVehicles", function(req, res) {
 
-  var newVehicle = req.body;
-
+  var newVehicle = req.body
   newVehicle.createDate = new Date();
-
-
 
   if (!req.body.plate) {
 
@@ -137,9 +135,6 @@ app.post("/api/registeredVehicles", function(req, res) {
     handleError(res, "Invalid user input", "Must provide a valid student ID.", 400);
 
   }else{
-
-
-
   db.collection(REGISTERED_VEHICLES_COLLECTION).insertOne(newVehicle, function(err, doc) {
 
     if (err) {
@@ -158,27 +153,18 @@ app.post("/api/registeredVehicles", function(req, res) {
 
 });
 
-
+//Adds a new vehicle to the vehiclesInLot collection
 app.post("/api/vehiclesInLot", function(req, res) {
 
   var newVehicle = req.body;
 
   newVehicle.createDate = new Date();
 
-
-
   if (!req.body.plate) {
 
     handleError(res, "Invalid user input", "Must provide a plate number.", 400);
 
-  }else if (!req.body.plate) {
-
-    handleError(res, "Invalid user input", "Must provide a valid student ID.", 400);
-
   }else{
-
-
-
   db.collection(VEHICLES_IN_LOT_COLLECTION).insertOne(newVehicle, function(err, doc) {
 
     if (err) {
@@ -198,25 +184,14 @@ app.post("/api/vehiclesInLot", function(req, res) {
 });
 
 
-/*  "/api/contacts/:id"
 
- *    GET: find contact by id
-
- *    PUT: update contact by id
-
- *    DELETE: deletes contact by id
-
- */
-
-
-
-app.get("/api/registeredVehicles/:id", function(req, res) {
+app.get("/api/registeredVehicles/ID/:id", function(req, res) {
 
   db.collection(REGISTERED_VEHICLES_COLLECTION).findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
 
     if (err) {
 
-      handleError(res, err.message, "Failed to get contact");
+      handleError(res, err.message, "Failed to get vehicle by id");
 
     } else {
 
@@ -228,13 +203,13 @@ app.get("/api/registeredVehicles/:id", function(req, res) {
 
 });
 
-app.get("/api/vehiclesInLot/:id", function(req, res) {
+app.get("/api/vehiclesInLot/ID/:id", function(req, res) {
 
   db.collection(VEHICLES_IN_LOT_COLLECTION).findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
 
     if (err) {
 
-      handleError(res, err.message, "Failed to get info");
+      handleError(res, err.message, "Failed to get vehicle by id");
 
     } else {
 
@@ -246,7 +221,7 @@ app.get("/api/vehiclesInLot/:id", function(req, res) {
 
 });
 
-app.get("/api/vehiclesInLot/:plate", function(req, res) {
+app.get("/api/vehiclesInLot/Plate/:plate", function(req, res) {
 
   db.collection(VEHICLES_IN_LOT_COLLECTION).findOne({ plate: new ObjectID(req.params.plate) }, function(err, doc) {
 
@@ -265,7 +240,7 @@ app.get("/api/vehiclesInLot/:plate", function(req, res) {
 });
 
 
-app.put("/api/registeredVehicles/:id", function(req, res) {
+app.put("/api/registeredVehicles/ID/:id", function(req, res) {
 
   var updateDoc = req.body;
 
@@ -290,7 +265,7 @@ app.put("/api/registeredVehicles/:id", function(req, res) {
   });
 
 });
-app.put("/api/vehiclesInLot/:id", function(req, res){
+app.put("/api/vehiclesInLot/ID/:id", function(req, res){
 
   var updateDoc = req.body;
 
@@ -319,7 +294,7 @@ app.put("/api/vehiclesInLot/:id", function(req, res){
 
 
 
-app.delete("/api/registeredVehicles/:id", function(req, res) {
+app.delete("/api/registeredVehicles/ID/:id", function(req, res) {
 
   db.collection(REGISTERED_VEHICLES_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
 
@@ -337,7 +312,7 @@ app.delete("/api/registeredVehicles/:id", function(req, res) {
 
 });
 
-app.delete("/api/vehiclesInLot", function(req, res){
+app.delete("/api/vehiclesInLot/ID/:id", function(req, res){
 
   db.collection(VEHICLES_IN_LOT_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
 
