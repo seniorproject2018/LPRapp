@@ -185,15 +185,51 @@ app.post("/api/vehiclesInLot", function(req, res) {
 
 
 
-app.get("/api/registeredVehicles/:id", function(req, res) {
+app.get("/api/registeredVehicles/ID/:id", function(req, res) {
 
-  db.collection(REGISTERED_VEHICLES_COLLECTION).findOne({ _id: req.params.id}, function(err, doc) {
+  db.collection(REGISTERED_VEHICLES_COLLECTION).findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
+
+    if (err) {
+
+      handleError(res, err.message, "Failed to get vehicle by id");
+
+    } else {
+
+      res.status(200).json(doc);
+
+    }
+
+  });
+
+});
+
+app.get("/api/vehiclesInLot/ID/:id", function(req, res) {
+
+  db.collection(VEHICLES_IN_LOT_COLLECTION).findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to get vehicle");
     } else {
       res.status(200).json(doc);
     }
   });
+});
+
+app.get("/api/vehiclesInLot/Plate/:plate", function(req, res) {
+
+  db.collection(VEHICLES_IN_LOT_COLLECTION).findOne({ plate: new ObjectID(req.params.plate) }, function(err, doc) {
+
+    if (err) {
+
+      handleError(res, err.message, "Failed to get info");
+
+    } else {
+
+      res.status(200).json(doc);
+
+    }
+
+  });
+
 });
 
 
