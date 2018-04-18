@@ -216,7 +216,7 @@ app.get("/api/vehiclesInLot/ID/:id", function(req, res) {
 
 app.get("/api/vehiclesInLot/Plate/:plate", function(req, res) {
 
-  db.collection(VEHICLES_IN_LOT_COLLECTION).findOne({ plate: new String(req.params.plate) }, function(err, doc) {
+  db.collection(VEHICLES_IN_LOT_COLLECTION).findOne({ plate: req.params.plate}, function(err, doc) {
 
     if (err) {
 
