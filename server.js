@@ -276,8 +276,8 @@ app.put("/api/registeredVehicles/ID/:id", function(req, res) {
 
 app.put("/api/vehiclesInLot/ID/:id", function(req, res){
 var newReg;
-  if(!req.body.registered){
-    handleError(res, "Invalid request parameters. Please input new status for 'registered'... Value was set to " + req.body.registered, 400);
+  if(!req.registered){
+    handleError(res, "Invalid request parameters. Please input new status for 'registered'... Value was set to " + req.body, 400);
   }else{
     newReg = req.body.registered;
 
