@@ -269,6 +269,7 @@ app.put("/api/registeredVehicles/ID/:id", function(req, res) {
       res.status(200).json(updateDoc);
     }
   });
+});
 
 app.put("/api/vehiclesInLot/ID/:id", function(req, res){
   var updateDoc = req.body;
@@ -282,7 +283,7 @@ app.put("/api/vehiclesInLot/ID/:id", function(req, res){
       res.status(200).json(updateDoc);
     }
   });
-
+});
 
 
 
@@ -322,4 +323,3 @@ app.delete("/api/vehiclesInLot/ID/:id", function(req, res){
 
 });
 
-});
