@@ -66,6 +66,12 @@ mongodb.MongoClient.connect(process.env.MONGODB_URI || "mongodb://heroku_gs8hmkn
 
   });
 
+  app.get('/api', function(req, res) {
+
+    res.sendFile(__dirname + '/api.html');
+
+  });
+
   //  API ROUTES BELOW
 
 
