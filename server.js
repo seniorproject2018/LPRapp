@@ -290,7 +290,7 @@ app.put("/api/vehiclesInLot/ID/:id", function(req, res){
 
 
 
-  db.collection(VEHICLES_IN_LOT_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, {updateDoc}, function(err, doc) {
+  db.collection(VEHICLES_IN_LOT_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
 
     if (err) {
 
