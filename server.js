@@ -277,13 +277,13 @@ app.put("/api/registeredVehicles/ID/:id", function(req, res) {
 app.put("/api/vehiclesInLot/ID/:id", function(req, res){
 var newReg = req.body.registered;
   if(!req.body.registered){
-    handleError(res, "Invalid request parameters. Please input new status for 'registered'... Value was set to " + req.body, 400);
+    handleError(res, "Invalid request parameters. Please input new status for 'registered'... Value was set to " + req.body.registered, 400);
   }else{
    db.collection(VEHICLES_IN_LOT_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, {$set:newReg}, function(err, doc) {
 
       if (err) {
   
-        handleError(res, err.message, "Failed to update vehicles. Request Body: " + req.body.registered);
+        handleError(res, err.message, "Failed to update vehicles. Request Body: " + req.body);
   
       } else {
   
