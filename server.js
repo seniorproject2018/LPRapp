@@ -166,6 +166,7 @@ app.post("/api/vehiclesInLot", function(req, res) {
   var newVehicle = req.body;
 
   newVehicle.createDate = new Date();
+  newVehicle.registered = "";
 
   if (!req.body.plate) {
 
@@ -179,7 +180,7 @@ app.post("/api/vehiclesInLot", function(req, res) {
       handleError(res, err.message, "Failed to create new vehicle in lot.");
 
     } else {
-
+      
       res.status(201).json(doc.ops[0]);
 
     }
