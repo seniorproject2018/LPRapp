@@ -279,7 +279,7 @@ db.collection(REGISTERED_VEHICLES_COLLECTION).updateOne({_id: new ObjectID(req.p
     res.status(200).json(updateDoc);
   }
 });
-});
+
 
 
 
@@ -320,3 +320,4 @@ app.delete("/api/vehiclesInLot/ID/:id", function(req, res){
 
 });
 
+});
