@@ -320,4 +320,3 @@ app.delete("/api/vehiclesInLot/ID/:id", function(req, res){
 
 });
 
-});
