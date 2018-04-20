@@ -258,43 +258,30 @@ app.get("/api/vehiclesInLot/Plate/:plate", function(req, res) {
 
 
 app.put("/api/registeredVehicles/ID/:id", function(req, res) {
-  db.collection(REGISTERED_VEHICLES_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, {$set:req.body}, function(err, doc) {
+  var updateDoc = req.body;
+  delete updateDoc._id;
 
+  db.collection(REGISTERED_VEHICLES_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
     if (err) {
-
-      handleError(res, err.message, "Failed to update vehicles");
-
+      handleError(res, err.message, "Failed to update document");
     } else {
-
-      res.status(200).json(req.body);
-
+      updateDoc._id = req.params.id;
+      res.status(200).json(updateDoc);
     }
-
   });
 
-});
-
 app.put("/api/vehiclesInLot/ID/:id", function(req, res){
-var newReg = req.body.registered;
-  
-   db.collection(VEHICLES_IN_LOT_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, {$set:{registered:newReg}, function(err, doc) {
+  var updateDoc = req.body;
+  delete updateDoc._id;
 
-      if (err) {
-  
-        handleError(res, err.message, "Failed to update vehicles. Request Body: " + req.body);
-  
-      } else {
-  
-        res.status(200).json(req.body);
-  
-      }
-  
-    });
-  
-
-  
-
-});
+  db.collection(VEHICLES_IN_LOT_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to update document");
+    } else {
+      updateDoc._id = req.params.id;
+      res.status(200).json(updateDoc);
+    }
+  });
 
 
 
