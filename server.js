@@ -257,33 +257,30 @@ app.get("/api/vehiclesInLot/Plate/:plate", function(req, res) {
 });
 
 
-app.put("/api/registeredVehicles/ID/:id", function(req, res) {
-  var updateDoc = req.body;
-  delete updateDoc._id;
-
-  db.collection(REGISTERED_VEHICLES_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
-    if (err) {
-      handleError(res, err.message, "Failed to update document. Update Doc: " + updateDoc);
-    } else {
-      updateDoc._id = req.params.id;
-      res.status(200).json(updateDoc);
-    }
-  });
-});
-
-app.put("/api/vehiclesInLot/ID/:id", function(req, res){
+app.put("/api/vehiclesInLot/ID/:id", function(req, res) {
   var updateDoc = req.body;
   delete updateDoc._id;
 
   db.collection(VEHICLES_IN_LOT_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
     if (err) {
-      handleError(res, err.message, "Failed to update document. Update Doc: " + updateDoc);
+      handleError(res, err.message, "Failed to update vehicles in lot. Update Doc: " + updateDoc);
     } else {
       updateDoc._id = req.params.id;
       res.status(200).json(updateDoc);
     }
   });
 });
+
+db.collection(REGISTERED_VEHICLES_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
+  if (err) {
+    handleError(res, err.message, "Failed to update registered vehicles. Update Doc: " + updateDoc);
+  } else {
+    updateDoc._id = req.params.id;
+    res.status(200).json(updateDoc);
+  }
+});
+});
+
 
 
 
@@ -323,3 +320,4 @@ app.delete("/api/vehiclesInLot/ID/:id", function(req, res){
 
 });
 
+});
