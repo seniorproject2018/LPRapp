@@ -257,7 +257,7 @@ app.get("/api/vehiclesInLot/Plate/:plate", function(req, res) {
 });
 
 
-app.post("/api/registeredVehicles/ID/:id", function(req, res) {
+app.put("/api/registeredVehicles/ID/:id", function(req, res) {
   db.collection(REGISTERED_VEHICLES_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, {$set:req.body}, function(err, doc) {
 
     if (err) {
@@ -274,18 +274,16 @@ app.post("/api/registeredVehicles/ID/:id", function(req, res) {
 
 });
 
-app.post("/api/vehiclesInLot/ID/:id", function(req, res){
-var newReg;
-  if(!req.registered){
+app.put("/api/vehiclesInLot/ID/:id", function(req, res){
+var newReg = req.body.registered;
+  if(!req.body.registered){
     handleError(res, "Invalid request parameters. Please input new status for 'registered'... Value was set to " + req.body, 400);
   }else{
-    newReg = req.registered;
-
-    db.collection(VEHICLES_IN_LOT_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, {$set:{registered:newReg}}, function(err, doc) {
+   db.collection(VEHICLES_IN_LOT_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, {$set:newReg}, function(err, doc) {
 
       if (err) {
   
-        handleError(res, err.message, "Failed to update vehicles. Request Body: " + req.body);
+        handleError(res, err.message, "Failed to update vehicles. Request Body: " + req.body.registered);
   
       } else {
   
