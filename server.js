@@ -258,15 +258,22 @@ app.get("/api/vehiclesInLot/Plate/:plate", function(req, res) {
 
 
 app.put("/api/registeredVehicles/ID/:id", function(req, res) {
+  db.collection(REGISTERED_VEHICLES_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, {$set:req.body}, function(err, doc) {
 
-  var updates = req.body;
-  delete updateDoc._id;
+    if (err) {
 
+      handleError(res, err.message, "Failed to update vehicles");
 
+    } else {
 
-  var document =  db.collection(REGISTERED_VEHICLES_COLLECTION).find({_id: new ObjectID(req.params.id)}, function(err, doc);
+      res.status(200).json(req.body);
+
+    }
+
+  });
 
 });
+
 app.put("/api/vehiclesInLot/ID/:id", function(req, res){
 
   db.collection(VEHICLES_IN_LOT_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, {$set:req.body}, function(err, doc) {
@@ -277,9 +284,7 @@ app.put("/api/vehiclesInLot/ID/:id", function(req, res){
 
     } else {
 
-      updateDoc._id = req.params.id;
-
-      res.status(200).json(updateDoc);
+      res.status(200).json(req.body);
 
     }
 
