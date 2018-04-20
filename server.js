@@ -263,7 +263,7 @@ app.put("/api/registeredVehicles/ID/:id", function(req, res) {
 
   db.collection(REGISTERED_VEHICLES_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
     if (err) {
-      handleError(res, err.message, "Failed to update document");
+      handleError(res, err.message, "Failed to update document. Update Doc: " + updateDoc);
     } else {
       updateDoc._id = req.params.id;
       res.status(200).json(updateDoc);
@@ -276,7 +276,7 @@ app.put("/api/vehiclesInLot/ID/:id", function(req, res){
 
   db.collection(VEHICLES_IN_LOT_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
     if (err) {
-      handleError(res, err.message, "Failed to update document");
+      handleError(res, err.message, "Failed to update document. Update Doc: " + updateDoc);
     } else {
       updateDoc._id = req.params.id;
       res.status(200).json(updateDoc);
