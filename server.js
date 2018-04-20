@@ -276,7 +276,7 @@ app.put("/api/registeredVehicles/ID/:id", function(req, res) {
 
 app.put("/api/vehiclesInLot/ID/:id", function(req, res){
 
-  db.collection(VEHICLES_IN_LOT_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, {$set:req.body}, function(err, doc) {
+  db.collection(VEHICLES_IN_LOT_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, {$set:req.body.json()}, function(err, doc) {
 
     if (err) {
 
