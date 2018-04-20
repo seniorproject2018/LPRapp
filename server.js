@@ -57,6 +57,7 @@ mongodb.MongoClient.connect(process.env.MONGODB_URI || "mongodb://heroku_gs8hmkn
     console.log("App now running on port", port);
 
   });
+});
 
 
 
@@ -271,6 +272,9 @@ app.put("/api/vehiclesInLot/ID/:id", function(req, res) {
   });
 });
 
+app.put("/api/registeredVehicles/ID/:id", function(req, res) {
+  var updateDoc = req.body;
+  delete updateDoc._id;
 db.collection(REGISTERED_VEHICLES_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
   if (err) {
     handleError(res, err.message, "Failed to update registered vehicles. Update Doc: " + updateDoc);
@@ -278,6 +282,7 @@ db.collection(REGISTERED_VEHICLES_COLLECTION).updateOne({_id: new ObjectID(req.p
     updateDoc._id = req.params.id;
     res.status(200).json(updateDoc);
   }
+});
 });
 
 
@@ -320,4 +325,3 @@ app.delete("/api/vehiclesInLot/ID/:id", function(req, res){
 
 });
 
-});
