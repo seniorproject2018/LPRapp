@@ -63,17 +63,17 @@ mongodb.MongoClient.connect(process.env.MONGODB_URI || "mongodb://heroku_gs8hmkn
 
   app.get('/', function(req, res) {
 
-    res.sendFile(__dirname + '/html/index.html');
+    res.sendFile(__dirname + '/index.html');
 
   });
 
   app.get('/api', function(req, res) {
 
-    res.sendFile(__dirname + '/html/api.html');
+    res.sendFile(__dirname + '/api.html');
 
   });
 
-  app.get('/images/Ready_Park-logo.png', function(req, res) {
+  app.get('/img/Ready_Park-logo.png', function(req, res) {
 
     res.sendFile(__dirname + '/images/Ready_Park-logo.png');
 
